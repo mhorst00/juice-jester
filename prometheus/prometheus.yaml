@@ -1,0 +1,16 @@
+global:
+    rule_files:
+      - iot-project-alerts.yml
+
+    alerting:
+      alertmanagers:
+      - static_configs:
+        - targets: ['prometheus.monitoring.svc.cluster.local:9093']
+
+    scrape_configs:
+      - job_name: iot_project
+        scrape_interval: 1s
+        scrape_timeout: 1s
+        scheme: http
+        static_configs:
+        - targets: ['0.0.0.0'] # Change this

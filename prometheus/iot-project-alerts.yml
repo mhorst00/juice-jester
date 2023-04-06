@@ -1,0 +1,12 @@
+groups:
+    - name: iot-alerts
+      rules:
+      - alert: High power alert
+        expr: power >= 50
+        for: 1s
+        labels:
+          severity: critical
+        annotations:
+          title: 'High power usage'
+          description: 'Device uses more than 50W for more than 10 seconds'
+
