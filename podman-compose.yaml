@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  grafana:
+    image: docker.io/grafana/grafana:latest
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+
+  prometheus:
+    image: quay.io/prometheus/prometheus:latest
+    restart: unless-stopped
+    ports:
+      - 9090:9090
+      - 9100:9100
+    volumes:
+      - ${PWD}/prometheus:/etc/prometheus:z
+      - prometheus_data:/prometheus
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+
+  alertmanager:
+    image: quay.io/prometheus/alertmanager:latest
+    restart: unless-stopped
+    ports:
+      - 9093:9093
+    command:
+      - "--config.file=/config/alertmanager.yml"
+      - "--log.level=debug"
+    volumes:
+      - ${PWD}/prometheus:/config:z
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+
+volumes:
+  grafana_data: {}
+  prometheus_data: {}

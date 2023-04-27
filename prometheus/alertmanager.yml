@@ -1,0 +1,11 @@
+route:
+  group_by: ['alertname', 'job']
+  group_wait: 10s
+  group_interval: 1m
+  repeat_interval: 10m
+  receiver: discord
+
+receivers:
+  - name: discord
+    discord_configs:
+      - webhook_url: "https://discord.com/api/webhooks/1093081601874853919/8oeAQyYqQ-L7QVqyr8AvdchHVXFUwo37m03prVL0dkBWUTZ7VeStrsYvwkAGrcNM83wP"
